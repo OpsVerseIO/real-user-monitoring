@@ -24,10 +24,9 @@ var tracer = (function () {
   } = require("@opentelemetry/semantic-conventions");
 
   //Decalarations
-  let authKey = "ZGV2b3Bzbm93OndlaXJkaGVhdDE4";
-  let serviceName = "tracer-rum";
-  let collectorUrl =
-    "https://jaeger-collector-pearjet.observe.devopsnow.cloud/api/v2/spans";
+  let authKey = "";
+  let serviceName = "";
+  let collectorUrl = "";
 
   function create() {
     var start = function (params) {
