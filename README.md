@@ -1,5 +1,7 @@
 ### Real User Monitoring (Browser Implementation)
 
+===================================================================================================
+
 ## Overview
 
 OpsVerse Browser RUM uses OpenTelemetry standards to enable High-quality, ubiquitous, and portable telemetry to enable effective observability. OpsVerse RUM packages can be used to instrument, generate, collect, and export telemetry data (metrics, logs, and traces) to help you analyze your software’s performance and behavior.
@@ -74,11 +76,22 @@ Add @OpsVerseIO/browser-rum to your package.json file, then initialize:
 
 Now, build your application and run your code in the browser. In the console/network tab of the browsers developer toolbar you should see some traces being exported to the collector url.
 
+===================================================================================================
+
 ### Real User Monitoring (NodeJs Implementation)
 
 ## Overview
 
 ## Opentelemetry Packages used
+
+[@opentelemetry/sdk-node](https://www.npmjs.com/package/@opentelemetry/sdk-node)
+[@opentelemetry/auto-instrumentations-node](https://www.npmjs.com/package/@opentelemetry/auto-instrumentations-node)
+[@opentelemetry/resources](https://www.npmjs.com/package/@opentelemetry/resources)
+[@opentelemetry/semantic-conventions](https://www.npmjs.com/package/@opentelemetry/semantic-conventions)
+[@opentelemetry/exporter-zipkin](https://www.npmjs.com/package/@opentelemetry/exporter-zipkin)
+[@opentelemetry/core](https://www.npmjs.com/package/@opentelemetry/core)
+[@opentelemetry/propagator-b3](https://www.npmjs.com/package/@opentelemetry/propagator-b3)
+[@opentelemetry/api](https://www.npmjs.com/package/@opentelemetry/api)
 
 ## Setup
 
@@ -107,28 +120,28 @@ Create a file with a name like tracing.js which will contain your tracing setup 
     const api = require("@opentelemetry/api");
 
     const options = {
-    headers: {
-        Authorization: "Basic ZGV2b3Bzbm93OndlaXJkaGVhdDE4",
-    },
-    url: "https://jaeger-collector-pearjet.observe.devopsnow.cloud/api/v2/spans",
+        headers: {
+            Authorization: "Basic <base64 encoded>",
+        },
+        url: "<OpsVerse Collector Url>",
     };
     const exporter = new ZipkinExporter(options);
 
     const sdk = new opentelemetry.NodeSDK({
-    traceExporter: exporter,
-    instrumentations: [getNodeAutoInstrumentations()],
-    resource: new Resource({
-        [SemanticResourceAttributes.SERVICE_NAME]: "console-api",
-    }),
+        traceExporter: exporter,
+        instrumentations: [getNodeAutoInstrumentations()],
+        resource: new Resource({
+            [SemanticResourceAttributes.SERVICE_NAME]: "<tracking-name>",
+        }),
     });
 
     api.propagation.setGlobalPropagator(
-    new CompositePropagator({
-        propagators: [
-        new B3Propagator(),
-        new B3Propagator({ injectEncoding: B3InjectEncoding.MULTI_HEADER }),
-        ],
-    })
+        new CompositePropagator({
+            propagators: [
+                new B3Propagator(),
+                new B3Propagator({ injectEncoding: B3InjectEncoding.MULTI_HEADER }),
+            ],
+        })
     );
 
     sdk.start();
