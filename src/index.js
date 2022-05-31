@@ -1,7 +1,6 @@
 "use strict";
 
 var tracer = (function () {
-  //Imports
   const { WebTracerProvider } = require("@opentelemetry/sdk-trace-web");
   const {
     DocumentLoadInstrumentation,
@@ -23,23 +22,25 @@ var tracer = (function () {
     SemanticResourceAttributes,
   } = require("@opentelemetry/semantic-conventions");
 
-  //Decalarations
+  //Initialising Variables
   let authKey = "";
   let serviceName = "";
   let collectorUrl = "";
+  let samplingRatio = 1;
 
   function create() {
     var start = function (params) {
       if (params.serviceName) serviceName = params.serviceName;
       if (params.authKey) authKey = params.authKey;
       if (params.collectorUrl) collectorUrl = params.collectorUrl;
+      if (params.samplingRatio) samplingRatio = params.samplingRatio;
 
       const provider = new WebTracerProvider({
         resource: new Resource({
           context: serviceName,
           [SemanticResourceAttributes.SERVICE_NAME]: serviceName,
         }),
-        sampler: new TraceIdRatioBasedSampler(1),
+        sampler: new TraceIdRatioBasedSampler(samplingRatio),
       });
 
       const options = {
@@ -69,7 +70,12 @@ var tracer = (function () {
         instrumentations: [
           new DocumentLoadInstrumentation(),
           new FetchInstrumentation({
-            propagateTraceHeaderCorsUrls: [/http:\/\/localhost:*\.*/],
+            ignoreUrls: [/localhost:8090\/sockjs-node/],
+            propagateTraceHeaderCorsUrls: [
+              /.+/g, //Allows all service url's
+              "https://httpbin.org/get",
+            ],
+            clearTimingResources: true,
           }),
         ],
       });

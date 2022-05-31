@@ -5,8 +5,8 @@ module.exports = {
   output: {
     filename: "index.js",
     path: path.resolve(__dirname, ""),
-    library: "my-library",
-    libraryTarget: "umd", //exposes and know when to use module.exports or exports
+    library: "OpsVerseRum",
+    libraryTarget: "umd", //exposes and knows when to use module.exports or exports
   },
   mode: "production",
   module: {
