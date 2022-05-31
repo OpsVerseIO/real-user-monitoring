@@ -82,6 +82,10 @@ Now, build your application and run your code in the browser. In the console/net
 
 ## Overview
 
+In order to visualize and analyze your traces, you will need to export them to a tracing backend. Follow these instructions for setting up a backend and exporter.
+
+You may also want to use the BatchSpanProcessor to export spans in batches in order to more efficiently use resources and [B3 Propagation](https://github.com/openzipkin/b3-propagation) headers which are used for trace context propagation across service boundaries.
+
 ## Opentelemetry Packages used
 
 [@opentelemetry/sdk-node](https://www.npmjs.com/package/@opentelemetry/sdk-node)
@@ -156,5 +160,3 @@ Create a file with a name like tracing.js which will contain your tracing setup 
 ```
 
 Open your web browser and reload the page a few times, after a while you should see the spans printed in the console by the ConsoleSpanExporter.
-
-Fyi: [B3 Propagation](https://github.com/openzipkin/b3-propagation) is a specification for the header "b3" and those that start with "x-b3-". These headers are used for trace context propagation across service boundaries.
