@@ -1,0 +1,44 @@
+{
+  "name": "@OpsVerseIO/browser-rum",
+  "version": "1.0.0",
+  "description": "OpsVerse real user monitoring package",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:OpsVerseIO/real-user-monitoring.git"
+  },
+  "publishConfig": {
+    "@OpsVerseIO:registry": "https://npm.pkg.github.com/"
+  },
+  "keywords": [],
+  "author": "OpsVerse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OpsVerseIO/real-user-monitoring/issues"
+  },
+  "homepage": "https://github.com/OpsVerseIO/real-user-monitoring/blob/main/README.md",
+  "dependencies": {
+    "@opentelemetry/context-zone": "^1.0.1",
+    "@opentelemetry/core": "^1.0.1",
+    "@opentelemetry/exporter-zipkin": "^1.0.1",
+    "@opentelemetry/instrumentation": "^0.27.0",
+    "@opentelemetry/instrumentation-document-load": "^0.27.0",
+    "@opentelemetry/instrumentation-fetch": "^0.27.0",
+    "@opentelemetry/propagator-b3": "^1.0.1",
+    "@opentelemetry/resources": "^1.0.1",
+    "@opentelemetry/sdk-trace-web": "^1.0.1",
+    "@opentelemetry/semantic-conventions": "^1.0.1",
+    "@opentelemetry/tracing": "^0.24.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.10",
+    "@babel/plugin-transform-runtime": "^7.16.10",
+    "@babel/preset-env": "^7.16.10",
+    "babel-loader": "^8.2.3",
+    "webpack": "^5.66.0",
+    "webpack-cli": "^4.9.1"
+  }
+}
