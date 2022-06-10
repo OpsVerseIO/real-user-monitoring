@@ -1,40 +1,57 @@
-### Real User Monitoring (Browser Implementation)
+# Real User Monitoring
 
-===================================================================================================
+## Browser Instrumentation
 
-## Overview
+### Overview
 
-OpsVerse Browser RUM uses OpenTelemetry standards to enable high quality, ubiquitous, and portable telemetry to enable effective observability. OpsVerse browser rum package can be used to instrument, generate, collect, and export telemetry data (metrics, logs, and traces) to help you analyze your software’s performance and behavior.
+OpsVerse Browser RUM uses OpenTelemetry standards to enable high quality, ubiquitous, and portable telemetry to enable effective observability. OpsVerse browser RUM package can be used to instrument, generate, collect, and export telemetry data (metrics, logs, and traces) to help you analyze your software’s performance and behavior.
 
-## Setup
+Note: Currently the library supports only [Fetch Api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) for Trace header propagation. [Axios has issues](https://github.com/open-telemetry/opentelemetry-js/issues/1076)
+
+### Setup
 
 This guide uses the NPM, but the steps to instrument your own application should be broadly the same.
 
 Add @OpsVerseIO/browser-rum to your package.json file, then initialize:
 
-### For HTML and Javascript based application
+#### For HTML and Javascript based application
 
 ```
-    import { OpsVerseRum } from ‘@OpsVerseIO/browser-rum’
+    import("@OpsVerseIO/browser-rum").then((res) => {
+        if(res){
+            res.start({
+                authKey: "<B64EncodedBasicAuthToCollectorUrl>",
+                serviceName: "example-service",
+                collectorUrl: "<OpenTelemetryCollectorUrl>",
+                samplingRatio: "1" //min: 0.0 and max: 1.0
+            });
+        }
+    })
+```
+
+or
+
+```
+    import { OpsVerseBrowserRum } from ‘@OpsVerseIO/browser-rum’
     if (typeof window !== "undefined" && OpsVerseRum) {
-        OpsVerseRum.start({
-            authKey: "<base64 encoded>",
-            serviceName: "<unique tracing id>",
-            collectorUrl: "<OpsVerse collector url>",
+        OpsVerseBrowserRum.start({
+            authKey: "<B64EncodedBasicAuthToCollectorUrl>",
+            serviceName: "example-service",
+            collectorUrl: "<OpenTelemetryCollectorUrl>",
             samplingRatio: "1" //min: 0.0 and max: 1.0
         });
     }
 ```
 
-### For NextJS implementation you need to import the package dynamically. Open “\_app.js” file
+#### For NextJS
 
 ```
     const [libraryLoaded, setLibraryLoaded] = React.useState(false);
     const OpsVerseRumLibrary = dynamic(
         () =>
-        import(“@OpsVerseIO/rum”).then((res) => {
+        import(“@OpsVerseIO/browser-rum").then((res) => {
             if (res) {
-            setLibraryLoaded(true);
+                setLibraryLoaded(true);
             }
         }),
         { ssr: false }
@@ -42,11 +59,11 @@ Add @OpsVerseIO/browser-rum to your package.json file, then initialize:
 
     React.useEffect(() => {
     if (!libraryLoaded) return;
-        OpsVerseRum.start({
-            authKey: "<base64 encoded>",
-            serviceName: "<unique tracing id>",
-            collectorUrl: "<OpsVerse collector url>",
-            samplingRatio: "<min: 0.0 and max: 1.0>"
+        OpsVerseBrowserRum.start({
+            authKey: "<B64EncodedBasicAuthToCollectorUrl>",
+            serviceName: "example-service",
+            collectorUrl: "<OpenTelemetryCollectorUrl>",
+            samplingRatio: "1" //min: 0.0 and max: 1.0
         });
     }, [libraryLoaded]);
 
@@ -58,13 +75,13 @@ Add @OpsVerseIO/browser-rum to your package.json file, then initialize:
     )
 ```
 
-## Start your application
+#### Start your application
 
 Now, build your application and run your code in the browser. In the console/network tab of the browsers developer toolbar you should see some traces being exported to the collector url.
 
-See [OpsVerse support docs](https://docs.opsverse.io) for reference.
+See [OpsVerse support docs](https://docs.opsverse.io/observenow/collection/application-integration/node/) for reference.
 
-## Opentelemetry Packages used
+#### Opentelemetry Packages used
 
 [@opentelemetry/sdk-trace-web](https://www.npmjs.com/package/@opentelemetry/sdk-trace-web)
 [@opentelemetry/instrumentation-document-load](https://www.npmjs.com/package/@opentelemetry/instrumentation-document-load)
@@ -78,21 +95,18 @@ See [OpsVerse support docs](https://docs.opsverse.io) for reference.
 [@opentelemetry/resources](https://www.npmjs.com/package/@opentelemetry/resources)
 [@opentelemetry/semantic-conventions](https://www.npmjs.com/package/@opentelemetry/semantic-conventions)
 
-===================================================================================================
+## NodeJS Instrumentation
 
-### Real User Monitoring (NodeJs Implementation)
-
-## Overview
+### Overview
 
 In order to visualize and analyze your traces, you will need to export them to a tracing server. Follow these instructions for setting up a backend and exporter.
 
 You may also want to use the BatchSpanProcessor to export spans in batches in order to more efficiently use resources and [B3 Propagation](https://github.com/openzipkin/b3-propagation) headers which are used for trace context propagation across service boundaries.
 
-## Setup
+### Setup
 
-npm install or yarn add the following packages
+Please npm install or yarn add the following packages
 
-```
 [@opentelemetry/sdk-node](https://www.npmjs.com/package/@opentelemetry/sdk-node)
 [@opentelemetry/auto-instrumentations-node](https://www.npmjs.com/package/@opentelemetry/auto-instrumentations-node)
 [@opentelemetry/resources](https://www.npmjs.com/package/@opentelemetry/resources)
@@ -101,9 +115,8 @@ npm install or yarn add the following packages
 [@opentelemetry/core](https://www.npmjs.com/package/@opentelemetry/core)
 [@opentelemetry/propagator-b3](https://www.npmjs.com/package/@opentelemetry/propagator-b3)
 [@opentelemetry/api](https://www.npmjs.com/package/@opentelemetry/api)
-```
 
-Create a file tracing.js which will contain your tracing setup code.
+#### Create a file tracing.js which will contain your tracing setup code.
 
 ```
     /* tracing.js */
@@ -162,4 +175,4 @@ The tracing setup and configuration should be run before your application code. 
     node --require './tracing.js' app.js
 ```
 
-You are now good to use the [OpsVerse](https://opsverse.io) monitoring tool now!
+You are now good to send traces to any OpenTelemetry Collector. This library was specifically crafted so that you may additionally get Real User Monitoring metrics if by sending to the OpenTelemetry Collector you launched via [Opsverse](https://console.opsverse.io)

@@ -1,7 +1,7 @@
 {
   "name": "@OpsVerseIO/browser-rum",
-  "version": "1.0.5",
-  "description": "This is a package to support Real User Monitoring",
+  "version": "1.0.0",
+  "description": "OpsVerse real user monitoring package",
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js"
@@ -11,7 +11,7 @@
     "url": "git@github.com:OpsVerseIO/real-user-monitoring.git"
   },
   "publishConfig": {
-   "@OpsVerseIO:registry": "https://npm.pkg.github.com/"
+    "@OpsVerseIO:registry": "https://npm.pkg.github.com/"
   },
   "keywords": [],
   "author": "OpsVerse",

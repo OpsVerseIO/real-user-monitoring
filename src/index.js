@@ -70,11 +70,8 @@ var tracer = (function () {
         instrumentations: [
           new DocumentLoadInstrumentation(),
           new FetchInstrumentation({
-            ignoreUrls: [/localhost:8090\/sockjs-node/],
-            propagateTraceHeaderCorsUrls: [
-              /.+/g, //Allows all service url's
-              "https://httpbin.org/get",
-            ],
+            ignoreUrls: [/localhost/],
+            propagateTraceHeaderCorsUrls: ["/.+/g"],
             clearTimingResources: true,
           }),
         ],
@@ -96,9 +93,9 @@ var tracer = (function () {
   };
 })();
 
-var OpsVerseRum = tracer.getInstance();
+var OpsVerseBrowserRum = tracer.getInstance();
 if (global === undefined) {
   var global = window;
 }
-global.OpsVerseRum = tracer.getInstance();
-module.exports = OpsVerseRum;
+global.OpsVerseBrowserRum = tracer.getInstance();
+module.exports = OpsVerseBrowserRum;
