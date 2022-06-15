@@ -23,7 +23,7 @@ npm instal --save opsverse-rum
 For HTML and Javascript based application
 
 ```
-    import("@OpsVerseIO/browser-rum").then((res) => {
+    import("opsverse-rum").then((res) => {
         if(res){
             res.start({
                 authKey: "<B64EncodedBasicAuthToCollectorUrl>",
@@ -38,7 +38,7 @@ For HTML and Javascript based application
 or
 
 ```
-    import { OpsVerseBrowserRum } from ‘@OpsVerseIO/browser-rum’
+    import { OpsVerseBrowserRum } from ‘opsverse-rum’
     if (typeof window !== "undefined" && OpsVerseRum) {
         OpsVerseBrowserRum.start({
             authKey: "<B64EncodedBasicAuthToCollectorUrl>",
@@ -55,7 +55,7 @@ For NextJS
     const [libraryLoaded, setLibraryLoaded] = React.useState(false);
     const OpsVerseRumLibrary = dynamic(
         () =>
-        import(“@OpsVerseIO/browser-rum").then((res) => {
+        import("opsverse-rum").then((res) => {
             if (res) {
                 setLibraryLoaded(true);
             }
