@@ -1,5 +1,5 @@
 {
-  "name": "@OpsVerseIO/browser-rum",
+  "name": "opsverse-rum",
   "version": "1.0.0",
   "description": "OpsVerse real user monitoring package",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:OpsVerseIO/real-user-monitoring.git"
+    "url": "git+https://github.com/OpsVerseIO/real-user-monitoring.git"
   },
   "publishConfig": {
     "@OpsVerseIO:registry": "https://npm.pkg.github.com/"
@@ -31,7 +31,8 @@
     "@opentelemetry/resources": "^1.0.1",
     "@opentelemetry/sdk-trace-web": "^1.0.1",
     "@opentelemetry/semantic-conventions": "^1.0.1",
-    "@opentelemetry/tracing": "^0.24.0"
+    "@opentelemetry/tracing": "^0.24.0",
+    "how-to-npm": "^2.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.16.10",

@@ -12,9 +12,15 @@ Note: Currently the library supports only [Fetch Api](https://developer.mozilla.
 
 This guide uses the NPM, but the steps to instrument your own application should be broadly the same.
 
-Add @OpsVerseIO/browser-rum to your package.json file, then initialize:
+Execute the following command
 
-#### For HTML and Javascript based application
+```
+npm instal --save opsverse-rum
+```
+
+#### Import and initialize the package
+
+For HTML and Javascript based application
 
 ```
     import("@OpsVerseIO/browser-rum").then((res) => {
@@ -43,7 +49,7 @@ or
     }
 ```
 
-#### For NextJS
+For NextJS
 
 ```
     const [libraryLoaded, setLibraryLoaded] = React.useState(false);
