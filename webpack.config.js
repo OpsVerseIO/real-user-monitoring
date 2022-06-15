@@ -1,3 +1,5 @@
+const TerserPlugin = require("terser-webpack-plugin");
+const { compiler } = require("webpack");
 const path = require("path");
 
 module.exports = {
@@ -9,6 +11,20 @@ module.exports = {
     libraryTarget: "umd", //exposes and knows when to use module.exports or exports
   },
   mode: "production",
+  optimization: {
+    minimizer: [
+      (compiler) => {
+        new TerserPlugin({
+          terserOptions: {
+            format: {
+              comments: false,
+            },
+          },
+          extractComments: false,
+        }).apply(compiler);
+      },
+    ],
+  },
   module: {
     rules: [
       {
