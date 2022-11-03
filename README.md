@@ -16,6 +16,7 @@ Execute the following command
 
 ```
 npm instal --save opsverse-rum
+npm i @opentelemetry/api
 ```
 
 #### Import and initialize the package
