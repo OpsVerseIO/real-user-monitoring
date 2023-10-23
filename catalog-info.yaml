@@ -14,7 +14,7 @@ metadata:
     circleci.com/project-slug: github/OpsVerseIO/real-user-monitoring
     backstage.io/techdocs-ref: dir:.
     argocd/app-name: real-user-monitoring
-    prometheus.io/rule: container_memory_usage_bytes{pod=~"rum-.*"},sum by (container) (rate(container_cpu_usage_seconds_total{pod=~"adservice-.*"}[5m]))
+    prometheus.io/rule: container_memory_usage_bytes{pod=~"rum-.*"},sum by (container) (rate(container_cpu_usage_seconds_total{pod=~"rum-.*"}[5m]))
 spec:
   type: service
   lifecycle: production
