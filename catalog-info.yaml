@@ -13,7 +13,6 @@ metadata:
   annotations:
     circleci.com/project-slug: github/OpsVerseIO/real-user-monitoring
     backstage.io/techdocs-ref: dir:.
-    argocd/app-name: frontend-app
     fossa.io/project-name: sample-apps
     prometheus.io/rule: container_memory_usage_bytes{pod=~"rum-.*"},sum by (container) (rate(container_cpu_usage_seconds_total{pod=~"rum-.*"}[5m]))
 spec:
