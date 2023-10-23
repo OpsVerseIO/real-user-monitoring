@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: Real User Monitoring
+  name: real-user-monitoring
   description: Real User Monitoring Service
   tags:
     - node
