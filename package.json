@@ -4,7 +4,8 @@
   "description": "OpsVerse real user monitoring package",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "test": "echo No Tests Configured"
   },
   "repository": {
     "type": "git",
